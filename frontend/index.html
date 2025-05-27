@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Email Phishing Detector</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f5f9;
+      padding: 40px;
+      display: flex;
+      justify-content: center;
+    }
+
+    form {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .info {
+      font-size: 14px;
+      text-align: center;
+      color: #555;
+      margin-bottom: 15px;
+    }
+
+    .warning-box {
+      background-color: #fff3cd;
+      border-left: 5px solid #ffc107;
+      padding: 10px 15px;
+      border-radius: 6px;
+      font-size: 14px;
+      margin-bottom: 20px;
+      color: #856404;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+      color: #444;
+    }
+
+    .required-star {
+      color: red;
+      margin-left: 2px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      margin-top: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background: #007bff;
+      color: white;
+      padding: 12px;
+      margin-top: 20px;
+      width: 100%;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    #result {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 18px;
+      color: #1a1a1a;
+    }
+
+    #loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    #loading-overlay span {
+      background: white;
+      padding: 20px 30px;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 20px;
+      }
+
+      form {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="loading-overlay">
+    <span>Loading, please wait...</span>
+  </div>
+
+  <form id="predict-form">
+    <h1>Email Phishing Detector</h1>
+
+    <div class="info">Please fill the fields with (<span class="required-star">*</span>)</div>
+
+    <label>Sender (<span class="required-star">*</span>):</label>
+    <input type="text" name="sender" placeholder="sender@example.com" required>
+
+    <label>Receiver:</label>
+    <input type="text" name="receiver" placeholder="receiver@example.com">
+
+    <label>Date:</label>
+    <input type="text" name="date" placeholder="25 May, 2025">
+
+    <label>Subject (<span class="required-star">*</span>):</label>
+    <input type="text" name="subject" placeholder="e.g. No Subject" required>
+
+    <label>Body (<span class="required-star">*</span>):</label>
+    <textarea name="body" rows="5" required placeholder="Body of the Email"></textarea>
+
+    <label>URLs:</label>
+    <input type="text" name="urls" placeholder="https://phishingdetection.com">
+
+    <label>Model (<span class="required-star">*</span>):</label>
+    <select name="model_choice" required>
+      <option value="naive_bayes">Naive Bayes</option>
+      <option value="logistic_regression">Logistic Regression</option>
+      <option value="svm">SVM</option>
+    </select>
+
+    <br><br>
+
+    <div class="warning-box">
+      ⚠️ <strong>Note:</strong> SVM performs the best, while Naive Bayes is the least accurate. Choose your model wisely!
+    </div>
+
+    <button type="submit">Predict</button>
+
+    <h2 id="result"></h2>
+  </form>
+
+  <script>
+    const form = document.getElementById("predict-form");
+    const resultBox = document.getElementById("result");
+    const loadingOverlay = document.getElementById("loading-overlay");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      resultBox.textContent = "";
+      loadingOverlay.style.display = "flex";
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        const response = await fetch("http://127.0.0.1:8000/predict", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: new URLSearchParams(data)
+        });
+
+        const res = await response.json();
+        resultBox.textContent = "Prediction: " + res.result;
+      } catch (err) {
+        resultBox.textContent = "Error: Could not connect to the API";
+      } finally {
+        loadingOverlay.style.display = "none";
+      }
+    });
+  </script>
+
+</body>
+</html>

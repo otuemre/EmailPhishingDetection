@@ -28,10 +28,8 @@ def predict(
         urls: str = Form(' '),
         model_choice: str = Form(...)
 ):
-    print(sender, receiver, date, subject, body, urls, model_choice)
 
     prediction = predict_email(sender, receiver, date, subject, body,
                                urls, model_choice=model_choice)
-    print("Final Answer", prediction)
 
     return {'result': prediction}
