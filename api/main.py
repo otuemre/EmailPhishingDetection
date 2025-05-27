@@ -1,22 +1,37 @@
-from pipeline import predict_email
-
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Form
+from api.pipeline import predict_email
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # or your frontend domain
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.get('/')
 def root():
     return {'Hello': 'World'}
 
-@app.post('/predict')
-def predict(sender: str = '',
-            receiver: str = '',
-            date: str = '',
-            subject:str = '', body: str = '', urls: str = '',
-            model_choice: str = Query(..., description="Choose from: 'naive_bayes', 'logistic_regression', 'svm'")
-            ) -> dict[str, str]:
 
-    prediction = predict_email(sender=sender, receiver=receiver, date=date, subject=subject,
-                        body=body, urls=urls, model_choice=model_choice)
+@app.post('/predict')
+def predict(
+        sender: str = Form(...),
+        receiver: str = Form(' '),
+        date: str = Form(' '),
+        subject: str = Form(...),
+        body: str = Form(...),
+        urls: str = Form(' '),
+        model_choice: str = Form(...)
+):
+    print(sender, receiver, date, subject, body, urls, model_choice)
+
+    prediction = predict_email(sender, receiver, date, subject, body,
+                               urls, model_choice=model_choice)
+    print("Final Answer", prediction)
 
     return {'result': prediction}
