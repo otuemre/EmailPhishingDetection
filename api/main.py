@@ -1,6 +1,8 @@
 from fastapi import FastAPI, Form
-from api.pipeline import predict_email
+from pipeline import predict_email
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 app = FastAPI()
 
@@ -12,10 +14,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.mount('/static', StaticFiles(directory='../frontend/static'), name='static')
+
 
 @app.get('/')
 def root():
-    return {'Hello': 'World'}
+    return FileResponse('../frontend/static/index.html')
 
 
 @app.post('/predict')
@@ -28,7 +32,6 @@ def predict(
         urls: str = Form(' '),
         model_choice: str = Form(...)
 ):
-
     prediction = predict_email(sender, receiver, date, subject, body,
                                urls, model_choice=model_choice)
 
