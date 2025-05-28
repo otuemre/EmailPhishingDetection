@@ -8,9 +8,9 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # or your frontend domain
+    allow_origins=["https://phishingdetection.net"], # Make it ['*'] for local testing
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["POST", "GET"],
     allow_headers=["*"],
 )
 
