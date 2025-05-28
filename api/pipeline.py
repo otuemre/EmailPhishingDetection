@@ -1,8 +1,8 @@
-import os
 import re
 
 import joblib
 import nltk
+from pathlib import Path
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
@@ -15,14 +15,14 @@ stop_words = set(stopwords.words('english'))
 lemmatizer = WordNetLemmatizer()
 
 # Load Vectorizer and All the Models
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_DIR = os.path.join(BASE_DIR, '..', 'models')
+BASE_DIR = Path(__file__).resolve().parent.parent
+MODEL_DIR = BASE_DIR / "models"
 
-vectorizer = joblib.load(os.path.join(MODEL_DIR, 'tfidf_vectorizer.joblib'))
+vectorizer = joblib.load(MODEL_DIR / "tfidf_vectorizer.joblib")
 models = {
-    'naive_bayes': joblib.load(os.path.join(MODEL_DIR, 'naive_bayes_model.joblib')),
-    'logistic_regression': joblib.load(os.path.join(MODEL_DIR, 'logistic_regression_model.joblib')),
-    'svm': joblib.load(os.path.join(MODEL_DIR, 'svm_model.joblib')),
+    'naive_bayes': joblib.load(MODEL_DIR / "naive_bayes_model.joblib"),
+    'logistic_regression': joblib.load(MODEL_DIR / "logistic_regression_model.joblib"),
+    'svm': joblib.load(MODEL_DIR / "svm_model.joblib"),
 }
 
 # Merging the Fields
