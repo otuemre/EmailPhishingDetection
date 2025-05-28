@@ -26,6 +26,16 @@ async def custom_404_handler(request: Request, exc: StarletteHTTPException):
     return FileResponse("frontend/static/NotFound.html", status_code=404)
 
 
+@app.get("/robots.txt", include_in_schema=False)
+def robots():
+    return FileResponse("frontend/static/robots.txt", media_type="text/plain")
+
+
+@app.get("/sitemap.xml", include_in_schema=False)
+def sitemap():
+    return FileResponse("frontend/static/sitemap.xml", media_type="application/xml")
+
+
 @app.get('/')
 def root():
     return FileResponse('frontend/static/index.html')
