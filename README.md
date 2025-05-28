@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/github/license/otuemre/EmailPhishingDetection?style=flat-square)](./LICENSE.md)
 [![Deploy on Render](https://img.shields.io/badge/Deploy-Render-5e60ce?logo=render&style=flat-square)](https://phishingdetection.net)
-[![Hugging Face Models](https://img.shields.io/badge/HuggingFace-SVM%20%7C%20TFIDF-orange?logo=huggingface&style=flat-square)](https://huggingface.co/otuemre)
+[![Hugging Face Models](https://img.shields.io/badge/HuggingFace-SVM%20%7C%20TFIDF-orange?logo=huggingface&style=flat-square)](https://huggingface.co/emreotu)
 
 Detect phishing emails in real-time using machine learning — trained on six merged datasets and deployed via a full-stack FastAPI app.
 
