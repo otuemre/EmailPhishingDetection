@@ -36,6 +36,11 @@ def sitemap():
     return FileResponse("frontend/static/sitemap.xml", media_type="application/xml")
 
 
+@app.get("/google4c935f6316549eef.html")
+def verify_google():
+    return FileResponse("frontend/static/google4c935f6316549eef.html")
+
+
 @app.get('/')
 def root():
     return FileResponse('frontend/static/index.html')
