@@ -14,6 +14,7 @@ Detect phishing emails in real-time using machine learning — trained on six me
 - [Tech Stack](#️-tech-stack)
 - [ML Models](#-ml-models)
 - [Sample Input](#-sample-input)
+- [Future Improvements](#-future-improvements)
 - [Project Structure](#-project-structure)
 - [Acknowledgements](#-acknowledgements)
 - [Author](#-author)
@@ -68,6 +69,28 @@ Model: SVM
 ```
 
 ✔️ Output: **Phishing**
+
+---
+
+### 🚀 Future Improvements
+
+- **📡 Public API & Documentation**  
+  Provide a proper REST API endpoint with OpenAPI/Swagger documentation so developers can integrate the phishing detection system into their own applications.
+
+- **🎨 Improve the UI**  
+  Rebuild the frontend using a modern framework like React (possibly with Tailwind or Material UI) to create a more interactive and responsive user experience.
+
+- **🔗 URL-Based Model**  
+  Train and integrate a secondary model focused specifically on analyzing URLs for phishing characteristics such as domain structure, length, obfuscation, and suspicious keywords.
+
+- **📈 Expand the Dataset**  
+  Enhance the model's performance by collecting a larger and more diverse dataset of phishing and legitimate emails, improving generalization and reducing bias.
+
+- **🧠 Improve Model Explainability**  
+  Integrate explainable AI tools like SHAP or LIME to provide transparency into why the model classified an email as phishing or legitimate.
+
+- **📬 Real-Time Email API Integration (Optional)**  
+  Integrate with email providers like Gmail or Microsoft Outlook via API to allow live scanning of user inboxes (with permission) and flag suspicious messages in real time.
 
 ---
 
