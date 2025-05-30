@@ -1,10 +1,15 @@
 import re
+from urllib.parse import urlparse
 
 import joblib
 import nltk
+import pandas as pd
+
 from pathlib import Path
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
+
+from extract_features import extract_features
 
 # Download NLTK resources
 nltk.download('stopwords')
@@ -23,6 +28,12 @@ models = {
     'naive_bayes': joblib.load(MODEL_DIR / "naive_bayes_model.joblib"),
     'logistic_regression': joblib.load(MODEL_DIR / "logistic_regression_model.joblib"),
     'svm': joblib.load(MODEL_DIR / "svm_model.joblib"),
+}
+
+tfidf_path_vectorizer = joblib.load(MODEL_DIR / 'url_path_tfidf_vectorizer.joblib')
+url_models = {
+    'random_forest': joblib.load(MODEL_DIR / 'url_rf_tuned_model.joblib'),
+    'xgboost': joblib.load(MODEL_DIR / 'url_xgb_tuned_model.joblib')
 }
 
 
@@ -60,6 +71,36 @@ def preprocess_text(text: str) -> str:
     return ' '.join(lemmatized)
 
 
+def predict_url(url: str, model_choice: str = 'xgboost') -> str:
+    # Extract the features
+    features = extract_features(url)
+
+    # Convert to DataFrame
+    vector = pd.DataFrame([features])
+
+    # Extract TF-IDF path features
+    url_path = urlparse(url).path
+    tfidf_vector = tfidf_path_vectorizer.transform([url_path])
+    tfidf_df = pd.DataFrame(
+        tfidf_vector.toarray(),
+        columns=[f"tfidf_{f}" for f in tfidf_path_vectorizer.get_feature_names_out()]
+    )
+
+    # Concat the Features
+    full_vector = pd.concat([vector.reset_index(drop=True), tfidf_df.reset_index(drop=True)], axis=1)
+
+    # Validate Model Choice
+    if model_choice not in url_models:
+        raise ValueError("Invalid model choice. Choose 'random_forest' or 'xgboost'.")
+
+    # Predict
+    model = url_models[model_choice]
+    prediction = model.predict(full_vector)
+    prob = model.predict_proba(full_vector)[0][prediction][0] * 100
+
+    return f"{'Phishing' if prediction == 1 else 'Legitimate'} - Confidence: {prob:.2f}%"
+
+
 def predict_email(sender: str = '', receiver: str = '', date: str = '',
                   subject: str = '', body: str = '', urls: str = '',
                   model_choice: str = '') -> str:
@@ -84,18 +125,3 @@ def predict_email(sender: str = '', receiver: str = '', date: str = '',
     confidence = prob[0][class_index] * 100
 
     return f"{'Phishing' if prediction == 1 else 'Legitimate'} - Confidence: {confidence:.2f}%"
-
-
-if __name__ == "__main__":
-    sender = 'googledev-noreply@google.com'
-    subject = 'X, one week until I/O… have you registered?'
-    body = '''
-        Hi X,
-        Google I/O is a week away and you don’t want to miss it! Join us for two days of product announcements and sessions covering the latest tech. Livestream keynotes start May 20 at 10 am PT.
-        Don’t wait! Register today so you’re ready when it all goes live.
-    '''
-    date = 'Tue 13 May, 17:26'
-    model = 'svm'
-
-    res = predict_email(sender=sender, date=date, subject=subject, body=body, model_choice=model)
-    print("The Email is", res)
