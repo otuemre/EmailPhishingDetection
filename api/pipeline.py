@@ -25,14 +25,15 @@ models = {
     'svm': joblib.load(MODEL_DIR / "svm_model.joblib"),
 }
 
+
 # Merging the Fields
 def merge_fields(sender: str = '', receiver: str = '', date: str = '',
-                 subject:str = '', body: str = '', urls: str = '') -> str:
-
+                 subject: str = '', body: str = '', urls: str = '') -> str:
     # To safely merge
     fields = [sender, receiver, date, subject, body, urls]
     # Merge and Return the Combined Text
     return " ".join(str(field).strip() for field in fields if field)
+
 
 # Text Preprocessing
 def preprocess_text(text: str) -> str:
@@ -58,10 +59,10 @@ def preprocess_text(text: str) -> str:
     # Return the Preprocessed Text
     return ' '.join(lemmatized)
 
-def predict_email(sender: str = '', receiver: str = '', date: str = '',
-                  subject:str = '', body: str = '', urls: str = '',
-                  model_choice: str = '') -> str:
 
+def predict_email(sender: str = '', receiver: str = '', date: str = '',
+                  subject: str = '', body: str = '', urls: str = '',
+                  model_choice: str = '') -> str:
     # Step 1: Merge the Text
     combined_text = merge_fields(sender, receiver, date, subject, body, urls)
 
@@ -78,9 +79,14 @@ def predict_email(sender: str = '', receiver: str = '', date: str = '',
     model = models[model_choice]
     prediction = model.predict(vector)[0]
 
-    return "Phishing" if prediction == 1 else "Legitimate"
+    prob = model.predict_proba(vector)
+    class_index = list(model.classes_).index(prediction)
+    confidence = prob[0][class_index] * 100
 
-if  __name__ == "__main__":
+    return f"{'Phishing' if prediction == 1 else 'Legitimate'} - Confidence: {confidence:.2f}%"
+
+
+if __name__ == "__main__":
     sender = 'googledev-noreply@google.com'
     subject = 'X, one week until I/O… have you registered?'
     body = '''
