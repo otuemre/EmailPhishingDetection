@@ -1,147 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Email Phishing Detector</title>
-  <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
-  <meta name="description" content="Detect phishing emails in real-time using machine learning. FastAPI-powered tool with SVM, Logistic Regression, and Naive Bayes models." />
-  <meta name="keywords" content="phishing detection, email classifier, machine learning, fastapi, cybersecurity, spam detection, nlp" />
-  <meta name="author" content="Emre Otu" />
-  <meta property="og:title" content="Email Phishing Detection" />
-  <meta property="og:description" content="Real-time phishing email detection system with machine learning and FastAPI." />
-  <meta property="og:image" content="https://phishingdetection.net/static/preview.png" />
-  <meta property="og:url" content="https://phishingdetection.net" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f2f5f9;
-      padding: 40px;
-      display: flex;
-      justify-content: center;
-    }
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Email Phishing Detector</title>
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon"/>
+    <meta name="description"
+          content="Detect phishing emails in real-time using machine learning. FastAPI-powered tool with SVM, Logistic Regression, and Naive Bayes models."/>
+    <meta name="keywords"
+          content="phishing detection, email classifier, machine learning, fastapi, cybersecurity, spam detection, nlp"/>
+    <meta name="author" content="Emre Otu"/>
+    <meta property="og:title" content="Email Phishing Detection"/>
+    <meta property="og:description"
+          content="Real-time phishing email detection system with machine learning and FastAPI."/>
+    <meta property="og:image" content="https://phishingdetection.net/static/preview.png"/>
+    <meta property="og:url" content="https://phishingdetection.net"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          background: #f2f5f9;
+          padding: 40px;
+          display: flex;
+          justify-content: center;
+        }
 
-    form {
-      background: #fff;
-      padding: 30px 40px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      width: 100%;
-      max-width: 500px;
-    }
+        form {
+          background: #fff;
+          padding: 30px 40px;
+          border-radius: 12px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          width: 100%;
+          max-width: 500px;
+        }
 
-    h1 {
-      text-align: center;
-      margin-bottom: 10px;
-      color: #333;
-    }
+        h1 {
+          text-align: center;
+          margin-bottom: 10px;
+          color: #333;
+        }
 
-    .info {
-      font-size: 14px;
-      text-align: center;
-      color: #555;
-      margin-bottom: 15px;
-    }
+        .info {
+          font-size: 14px;
+          text-align: center;
+          color: #555;
+          margin-bottom: 15px;
+        }
 
-    .warning-box {
-      background-color: #fff3cd;
-      border-left: 5px solid #ffc107;
-      padding: 10px 15px;
-      border-radius: 6px;
-      font-size: 14px;
-      margin-bottom: 20px;
-      color: #856404;
-    }
+        .warning-box {
+          background-color: #fff3cd;
+          border-left: 5px solid #ffc107;
+          padding: 10px 15px;
+          border-radius: 6px;
+          font-size: 14px;
+          margin-bottom: 20px;
+          color: #856404;
+        }
 
-    label {
-      font-weight: bold;
-      display: block;
-      margin-top: 15px;
-      color: #444;
-    }
+        label {
+          font-weight: bold;
+          display: block;
+          margin-top: 15px;
+          color: #444;
+        }
 
-    .required-star {
-      color: red;
-      margin-left: 2px;
-    }
+        .required-star {
+          color: red;
+          margin-left: 2px;
+        }
 
-    input, select, textarea {
-      width: 100%;
-      padding: 10px 12px;
-      margin-top: 6px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 14px;
-      box-sizing: border-box;
-    }
+        input, select, textarea {
+          width: 100%;
+          padding: 10px 12px;
+          margin-top: 6px;
+          border: 1px solid #ccc;
+          border-radius: 6px;
+          font-size: 14px;
+          box-sizing: border-box;
+        }
 
-    button {
-      background: #007bff;
-      color: white;
-      padding: 12px;
-      margin-top: 20px;
-      width: 100%;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
+        button {
+          background: #007bff;
+          color: white;
+          padding: 12px;
+          margin-top: 20px;
+          width: 100%;
+          border: none;
+          border-radius: 6px;
+          font-size: 16px;
+          cursor: pointer;
+          transition: background 0.3s ease;
+        }
 
-    button:hover {
-      background: #0056b3;
-    }
+        button:hover {
+          background: #0056b3;
+        }
 
-    #result {
-      text-align: center;
-      margin-top: 25px;
-      font-size: 18px;
-      color: #1a1a1a;
-    }
+        #result {
+          text-align: left;
+          margin-top: 25px;
+          font-size: 16px;
+          color: #1a1a1a;
+          padding: 15px;
+          border-radius: 8px;
+          background-color: #e7f4e4;
+          box-shadow: 0 0 5px rgba(0, 128, 0, 0.15);
+          white-space: pre-wrap;
+        }
 
-    #loading-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.4);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
+        #loading-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.4);
+          display: none;
+          justify-content: center;
+          align-items: center;
+          z-index: 1000;
+        }
 
-    #loading-overlay span {
-      background: white;
-      padding: 20px 30px;
-      border-radius: 10px;
-      font-size: 18px;
-      font-weight: bold;
-      color: #333;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
+        #loading-overlay span {
+          background: white;
+          padding: 20px 30px;
+          border-radius: 10px;
+          font-size: 18px;
+          font-weight: bold;
+          color: #333;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
 
-    @media (max-width: 600px) {
-      body {
-        padding: 20px;
-      }
+        @media (max-width: 600px) {
+          body {
+            padding: 20px;
+          }
 
-      form {
-        padding: 20px;
-      }
-    }
-  </style>
-  <meta name="google-site-verification" content="HKR9siuIhIXfd0PjRAC5xoj4P4iJakituaIiEihsbl8" />
+          form {
+            padding: 20px;
+          }
+        }
+    </style>
+    <meta name="google-site-verification" content="HKR9siuIhIXfd0PjRAC5xoj4P4iJakituaIiEihsbl8"/>
 </head>
 <body>
 
-  <div id="loading-overlay">
+<div id="loading-overlay">
     <span>Loading, please wait...</span>
-  </div>
+</div>
 
-  <form id="predict-form">
+<form id="predict-form">
     <h1>Email Phishing Detector</h1>
 
     <div class="info">Please fill the fields with (<span class="required-star">*</span>)</div>
@@ -166,23 +174,24 @@
 
     <label>Model (<span class="required-star">*</span>):</label>
     <select name="model_choice" required>
-      <option value="naive_bayes">Naive Bayes</option>
-      <option value="logistic_regression">Logistic Regression</option>
-      <option value="svm">SVM</option>
+        <option value="naive_bayes">Naive Bayes</option>
+        <option value="logistic_regression">Logistic Regression</option>
+        <option value="svm">SVM</option>
     </select>
 
     <br><br>
 
     <div class="warning-box">
-      ⚠️ <strong>Note:</strong> SVM performs the best, while Naive Bayes is the least accurate. Choose your model wisely!
+        ⚠️ <strong>Note:</strong> SVM performs the best, while Naive Bayes is the least accurate. Choose your model
+        wisely!
     </div>
 
     <button type="submit">Predict</button>
 
     <h2 id="result"></h2>
-  </form>
+</form>
 
-  <script>
+<script>
     const form = document.getElementById("predict-form");
     const resultBox = document.getElementById("result");
     const loadingOverlay = document.getElementById("loading-overlay");
@@ -200,26 +209,30 @@
         const response = await fetch("/predict", {
           method: "POST",
           headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
+            "Content-Type": "application/json"
           },
-          body: new URLSearchParams(data)
+          body: JSON.stringify(data)
         });
 
         const res = await response.json();
-        resultBox.textContent = "Prediction: " + res.result;
+        resultBox.innerHTML = `
+          <strong>Final Verdict:</strong> ${res.final_verdict}<br><br>
+          <strong>Email Detection:</strong> ${res.email_detection}<br>
+          <strong>URL Detection:</strong> ${res.url_detection}
+        `;
       } catch (err) {
         resultBox.textContent = "Error: Could not connect to the API";
       } finally {
         loadingOverlay.style.display = "none";
       }
     });
-  </script>
+</script>
 
-  <!--
-    Favicon Attribution:
-    Phishing icons created by Freepik - Flaticon
-    https://www.flaticon.com/free-icons/phishing
-  -->
+<!--
+  Favicon Attribution:
+  Phishing icons created by Freepik - Flaticon
+  https://www.flaticon.com/free-icons/phishing
+-->
 
 </body>
 </html>

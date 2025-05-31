@@ -9,7 +9,7 @@ from pathlib import Path
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
-from extract_features import extract_features
+from api.extract_features import extract_features
 
 # Download NLTK resources
 nltk.download('stopwords')
