@@ -1,158 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
+    <!-- Essential Meta Tags -->
+    <meta charset="UTF-8" lang="en"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Email Phishing Detector</title>
-    <link rel="icon" href="/static/favicon.ico" type="image/x-icon"/>
+    <title>Email Phishing Detector – Real-Time AI-based Phishing URL & Email Detection</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
+
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+
+    <!-- Android Chrome Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/static/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/static/android-chrome-512x512.png">
+
+    <!-- Manifest -->
+    <link rel="manifest" href="/static/site.webmanifest">
+
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/static/android-chrome-192x192.png">
+    <meta name="theme-color" content="#007bff">
+
+
+    <!-- SEO Description & Keywords -->
     <meta name="description"
-          content="Detect phishing emails in real-time using machine learning. FastAPI-powered tool with SVM, Logistic Regression, and Naive Bayes models."/>
+          content="Protect yourself from phishing attacks. Instantly detect malicious emails and URLs with our real-time AI-powered phishing detection system using SVM, Logistic Regression, and Naive Bayes."/>
     <meta name="keywords"
-          content="phishing detection, email classifier, machine learning, fastapi, cybersecurity, spam detection, nlp"/>
+          content="phishing detection, email phishing, malicious URLs, AI security, spam email detector, fastapi, machine learning, email scanner, URL phishing checker, real-time phishing analysis"/>
     <meta name="author" content="Emre Otu"/>
-    <meta property="og:title" content="Email Phishing Detection"/>
+
+    <!-- Open Graph (Facebook, LinkedIn) -->
+    <meta property="og:title" content="Email Phishing Detector – Stop Attacks in Real Time"/>
     <meta property="og:description"
-          content="Real-time phishing email detection system with machine learning and FastAPI."/>
+          content="Free and accurate phishing detection for emails and URLs. Protect against scams with AI-powered models in real time."/>
     <meta property="og:image" content="https://phishingdetection.net/static/preview.png"/>
     <meta property="og:url" content="https://phishingdetection.net"/>
+    <meta property="og:type" content="website"/>
+
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Email Phishing Detector – Real-Time Protection"/>
+    <meta name="twitter:description"
+          content="Detect and stop phishing emails and URLs using AI. Try our fast and accurate ML-based detector now!"/>
+    <meta name="twitter:image" content="https://phishingdetection.net/static/preview.png"/>
+
+    <!-- Canonical Link -->
+    <link rel="canonical" href="https://phishingdetection.net/"/>
+
     <style>
-          body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #f4f6f9;
-            padding: 40px 15px;
-            display: flex;
-            justify-content: center;
-          }
+        body {
+          font-family: 'Segoe UI', sans-serif;
+          background: #f4f6f9;
+          padding: 40px 15px;
+          display: flex;
+          justify-content: center;
+        }
 
+        form {
+          background: white;
+          padding: 40px;
+          border-radius: 14px;
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+          width: 100%;
+          max-width: 550px;
+          animation: fadeIn 0.4s ease-in-out;
+        }
+
+        h1 {
+          text-align: center;
+          margin-bottom: 6px;
+          font-size: 28px;
+          color: #2c3e50;
+        }
+
+        .info {
+          text-align: center;
+          font-size: 14px;
+          margin-bottom: 25px;
+          color: #7f8c8d;
+        }
+
+        label {
+          font-weight: 600;
+          display: block;
+          margin-top: 18px;
+          margin-bottom: 6px;
+          color: #34495e;
+        }
+
+        input, select, textarea {
+          width: 100%;
+          padding: 12px 14px;
+          font-size: 15px;
+          border: 1px solid #dfe6e9;
+          border-radius: 8px;
+          box-sizing: border-box;
+          background-color: #fdfefe;
+          transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+          border-color: #007bff;
+          outline: none;
+        }
+
+        .required-star {
+          color: red;
+          margin-left: 3px;
+        }
+
+        button {
+          background: #007bff;
+          color: white;
+          padding: 14px;
+          width: 100%;
+          border: none;
+          border-radius: 8px;
+          font-size: 16px;
+          font-weight: 600;
+          cursor: pointer;
+          margin-top: 28px;
+          transition: background 0.3s;
+        }
+
+        button:hover {
+          background: #0056b3;
+        }
+
+        .warning-box {
+          background-color: #fff3cd;
+          border-left: 5px solid #ffc107;
+          padding: 12px 15px;
+          border-radius: 6px;
+          margin-top: 18px;
+          color: #856404;
+          font-size: 14px;
+        }
+
+        #result {
+          margin-top: 30px;
+          padding: 20px;
+          border-radius: 10px;
+          background-color: #e8f8f5;
+          color: #1e272e;
+          font-size: 15px;
+          line-height: 1.6;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+          animation: slideUp 0.3s ease-in-out;
+        }
+
+        #loading-overlay {
+          position: fixed;
+          top: 0; left: 0; right: 0; bottom: 0;
+          background: rgba(0, 0, 0, 0.4);
+          display: none;
+          justify-content: center;
+          align-items: center;
+          z-index: 1000;
+        }
+
+        #loading-overlay span {
+          background: white;
+          padding: 20px 30px;
+          border-radius: 10px;
+          font-size: 18px;
+          font-weight: bold;
+          color: #333;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 600px) {
           form {
-            background: white;
-            padding: 40px;
-            border-radius: 14px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
-            width: 100%;
-            max-width: 550px;
-            animation: fadeIn 0.4s ease-in-out;
+            padding: 25px;
           }
+        }
 
-          h1 {
-            text-align: center;
-            margin-bottom: 6px;
-            font-size: 28px;
-            color: #2c3e50;
-          }
+        @keyframes fadeIn {
+          from {opacity: 0; transform: translateY(-10px);}
+          to {opacity: 1; transform: translateY(0);}
+        }
 
-          .info {
-            text-align: center;
-            font-size: 14px;
-            margin-bottom: 25px;
-            color: #7f8c8d;
-          }
-
-          label {
-            font-weight: 600;
-            display: block;
-            margin-top: 18px;
-            margin-bottom: 6px;
-            color: #34495e;
-          }
-
-          input, select, textarea {
-            width: 100%;
-            padding: 12px 14px;
-            font-size: 15px;
-            border: 1px solid #dfe6e9;
-            border-radius: 8px;
-            box-sizing: border-box;
-            background-color: #fdfefe;
-            transition: border-color 0.2s;
-          }
-
-          input:focus, select:focus, textarea:focus {
-            border-color: #007bff;
-            outline: none;
-          }
-
-          .required-star {
-            color: red;
-            margin-left: 3px;
-          }
-
-          button {
-            background: #007bff;
-            color: white;
-            padding: 14px;
-            width: 100%;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 28px;
-            transition: background 0.3s;
-          }
-
-          button:hover {
-            background: #0056b3;
-          }
-
-          .warning-box {
-            background-color: #fff3cd;
-            border-left: 5px solid #ffc107;
-            padding: 12px 15px;
-            border-radius: 6px;
-            margin-top: 18px;
-            color: #856404;
-            font-size: 14px;
-          }
-
-          #result {
-            margin-top: 30px;
-            padding: 20px;
-            border-radius: 10px;
-            background-color: #e8f8f5;
-            color: #1e272e;
-            font-size: 15px;
-            line-height: 1.6;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            animation: slideUp 0.3s ease-in-out;
-          }
-
-          #loading-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.4);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-          }
-
-          #loading-overlay span {
-            background: white;
-            padding: 20px 30px;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-          }
-
-          @media (max-width: 600px) {
-            form {
-              padding: 25px;
-            }
-          }
-
-          @keyframes fadeIn {
-            from {opacity: 0; transform: translateY(-10px);}
-            to {opacity: 1; transform: translateY(0);}
-          }
-
-          @keyframes slideUp {
-            from {opacity: 0; transform: translateY(20px);}
-            to {opacity: 1; transform: translateY(0);}
-          }
+        @keyframes slideUp {
+          from {opacity: 0; transform: translateY(20px);}
+          to {opacity: 1; transform: translateY(0);}
+        }
     </style>
 
     <meta name="google-site-verification" content="HKR9siuIhIXfd0PjRAC5xoj4P4iJakituaIiEihsbl8"/>
