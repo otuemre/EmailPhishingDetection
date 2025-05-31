@@ -1,251 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <!-- Essential Meta Tags -->
-    <meta charset="UTF-8" lang="en"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Email Phishing Detector – Real-Time AI-based Phishing URL & Email Detection</title>
+    <head>
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
+        <!-- Google Tag Manager -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KG3C8MZ3');
+        </script>
+        <!-- End Google Tag Manager -->
 
-    <!-- Apple Touch Icon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+        <!-- Essential Meta Tags -->
+        <meta charset="UTF-8" lang="en"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Email Phishing Detector – Real-Time AI-based Phishing URL & Email Detection</title>
 
-    <!-- Android Chrome Icons -->
-    <link rel="icon" type="image/png" sizes="192x192" href="/static/android-chrome-192x192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="/static/android-chrome-512x512.png">
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png">
 
-    <!-- Manifest -->
-    <link rel="manifest" href="/static/site.webmanifest">
+        <!-- Apple Touch Icon -->
+        <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
 
-    <!-- Microsoft Tiles -->
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/static/android-chrome-192x192.png">
-    <meta name="theme-color" content="#007bff">
+        <!-- Android Chrome Icons -->
+        <link rel="icon" type="image/png" sizes="192x192" href="/static/android-chrome-192x192.png">
+        <link rel="icon" type="image/png" sizes="512x512" href="/static/android-chrome-512x512.png">
+
+        <!-- Manifest -->
+        <link rel="manifest" href="/static/site.webmanifest">
+
+        <!-- Microsoft Tiles -->
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-TileImage" content="/static/android-chrome-192x192.png">
+        <meta name="theme-color" content="#007bff">
 
 
-    <!-- SEO Description & Keywords -->
-    <meta name="description"
-          content="Protect yourself from phishing attacks. Instantly detect malicious emails and URLs with our real-time AI-powered phishing detection system using SVM, Logistic Regression, and Naive Bayes."/>
-    <meta name="keywords"
-          content="phishing detection, email phishing, malicious URLs, AI security, spam email detector, fastapi, machine learning, email scanner, URL phishing checker, real-time phishing analysis"/>
-    <meta name="author" content="Emre Otu"/>
+        <!-- SEO Description & Keywords -->
+        <meta name="description"
+              content="Protect yourself from phishing attacks. Instantly detect malicious emails and URLs with our real-time AI-powered phishing detection system using SVM, Logistic Regression, and Naive Bayes."/>
+        <meta name="keywords"
+              content="phishing detection, email phishing, malicious URLs, AI security, spam email detector, fastapi, machine learning, email scanner, URL phishing checker, real-time phishing analysis"/>
+        <meta name="author" content="Emre Otu"/>
 
-    <!-- Open Graph (Facebook, LinkedIn) -->
-    <meta property="og:title" content="Email Phishing Detector – Stop Attacks in Real Time"/>
-    <meta property="og:description"
-          content="Free and accurate phishing detection for emails and URLs. Protect against scams with AI-powered models in real time."/>
-    <meta property="og:image" content="https://phishingdetection.net/static/preview.png"/>
-    <meta property="og:url" content="https://phishingdetection.net"/>
-    <meta property="og:type" content="website"/>
+        <!-- Open Graph (Facebook, LinkedIn) -->
+        <meta property="og:title" content="Email Phishing Detector – Stop Attacks in Real Time"/>
+        <meta property="og:description"
+              content="Free and accurate phishing detection for emails and URLs. Protect against scams with AI-powered models in real time."/>
+        <meta property="og:image" content="https://phishingdetection.net/static/preview.png"/>
+        <meta property="og:url" content="https://phishingdetection.net"/>
+        <meta property="og:type" content="website"/>
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:title" content="Email Phishing Detector – Real-Time Protection"/>
-    <meta name="twitter:description"
-          content="Detect and stop phishing emails and URLs using AI. Try our fast and accurate ML-based detector now!"/>
-    <meta name="twitter:image" content="https://phishingdetection.net/static/preview.png"/>
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta name="twitter:title" content="Email Phishing Detector – Real-Time Protection"/>
+        <meta name="twitter:description"
+              content="Detect and stop phishing emails and URLs using AI. Try our fast and accurate ML-based detector now!"/>
+        <meta name="twitter:image" content="https://phishingdetection.net/static/preview.png"/>
 
-    <!-- Canonical Link -->
-    <link rel="canonical" href="https://phishingdetection.net/"/>
+        <!-- Canonical Link -->
+        <link rel="canonical" href="https://phishingdetection.net/"/>
 
-    <style>
-        body {
-          font-family: 'Segoe UI', sans-serif;
-          background: #f4f6f9;
-          padding: 40px 15px;
-          display: flex;
-          justify-content: center;
-        }
+        <!-- schema.org -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "WebApplication",
+                "name": "Email Phishing Detector",
+                "url": "https://phishingdetection.net",
+                "description": "Real-time phishing detection using machine learning. Analyze emails and URLs with high confidence.",
+                "applicationCategory": "SecurityApplication",
+                "operatingSystem": "All",
+                "creator": {
+                    "@type": "Person",
+                    "name": "Emre Otu"
+                }
+            }
+        </script>
 
-        form {
-          background: white;
-          padding: 40px;
-          border-radius: 14px;
-          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
-          width: 100%;
-          max-width: 550px;
-          animation: fadeIn 0.4s ease-in-out;
-        }
+        <style>
+            body {
+              font-family: 'Segoe UI', sans-serif;
+              background: #f4f6f9;
+              padding: 40px 15px;
+              display: flex;
+              justify-content: center;
+            }
 
-        h1 {
-          text-align: center;
-          margin-bottom: 6px;
-          font-size: 28px;
-          color: #2c3e50;
-        }
+            form {
+              background: white;
+              padding: 40px;
+              border-radius: 14px;
+              box-shadow: 0 10px 25px rgba(0, 0, 0, 0.07);
+              width: 100%;
+              max-width: 550px;
+              animation: fadeIn 0.4s ease-in-out;
+            }
 
-        .info {
-          text-align: center;
-          font-size: 14px;
-          margin-bottom: 25px;
-          color: #7f8c8d;
-        }
+            h1 {
+              text-align: center;
+              margin-bottom: 6px;
+              font-size: 28px;
+              color: #2c3e50;
+            }
 
-        label {
-          font-weight: 600;
-          display: block;
-          margin-top: 18px;
-          margin-bottom: 6px;
-          color: #34495e;
-        }
+            .info {
+              text-align: center;
+              font-size: 14px;
+              margin-bottom: 25px;
+              color: #7f8c8d;
+            }
 
-        input, select, textarea {
-          width: 100%;
-          padding: 12px 14px;
-          font-size: 15px;
-          border: 1px solid #dfe6e9;
-          border-radius: 8px;
-          box-sizing: border-box;
-          background-color: #fdfefe;
-          transition: border-color 0.2s;
-        }
+            label {
+              font-weight: 600;
+              display: block;
+              margin-top: 18px;
+              margin-bottom: 6px;
+              color: #34495e;
+            }
 
-        input:focus, select:focus, textarea:focus {
-          border-color: #007bff;
-          outline: none;
-        }
+            input, select, textarea {
+              width: 100%;
+              padding: 12px 14px;
+              font-size: 15px;
+              border: 1px solid #dfe6e9;
+              border-radius: 8px;
+              box-sizing: border-box;
+              background-color: #fdfefe;
+              transition: border-color 0.2s;
+            }
 
-        .required-star {
-          color: red;
-          margin-left: 3px;
-        }
+            input:focus, select:focus, textarea:focus {
+              border-color: #007bff;
+              outline: none;
+            }
 
-        button {
-          background: #007bff;
-          color: white;
-          padding: 14px;
-          width: 100%;
-          border: none;
-          border-radius: 8px;
-          font-size: 16px;
-          font-weight: 600;
-          cursor: pointer;
-          margin-top: 28px;
-          transition: background 0.3s;
-        }
+            .required-star {
+              color: red;
+              margin-left: 3px;
+            }
 
-        button:hover {
-          background: #0056b3;
-        }
+            button {
+              background: #007bff;
+              color: white;
+              padding: 14px;
+              width: 100%;
+              border: none;
+              border-radius: 8px;
+              font-size: 16px;
+              font-weight: 600;
+              cursor: pointer;
+              margin-top: 28px;
+              transition: background 0.3s;
+            }
 
-        .warning-box {
-          background-color: #fff3cd;
-          border-left: 5px solid #ffc107;
-          padding: 12px 15px;
-          border-radius: 6px;
-          margin-top: 18px;
-          color: #856404;
-          font-size: 14px;
-        }
+            button:hover {
+              background: #0056b3;
+            }
 
-        #result {
-          margin-top: 30px;
-          padding: 20px;
-          border-radius: 10px;
-          background-color: #e8f8f5;
-          color: #1e272e;
-          font-size: 15px;
-          line-height: 1.6;
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-          animation: slideUp 0.3s ease-in-out;
-        }
+            .warning-box {
+              background-color: #fff3cd;
+              border-left: 5px solid #ffc107;
+              padding: 12px 15px;
+              border-radius: 6px;
+              margin-top: 18px;
+              color: #856404;
+              font-size: 14px;
+            }
 
-        #loading-overlay {
-          position: fixed;
-          top: 0; left: 0; right: 0; bottom: 0;
-          background: rgba(0, 0, 0, 0.4);
-          display: none;
-          justify-content: center;
-          align-items: center;
-          z-index: 1000;
-        }
+            #result {
+              margin-top: 30px;
+              padding: 20px;
+              border-radius: 10px;
+              background-color: #e8f8f5;
+              color: #1e272e;
+              font-size: 15px;
+              line-height: 1.6;
+              box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+              animation: slideUp 0.3s ease-in-out;
+            }
 
-        #loading-overlay span {
-          background: white;
-          padding: 20px 30px;
-          border-radius: 10px;
-          font-size: 18px;
-          font-weight: bold;
-          color: #333;
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
+            #loading-overlay {
+              position: fixed;
+              top: 0; left: 0; right: 0; bottom: 0;
+              background: rgba(0, 0, 0, 0.4);
+              display: none;
+              justify-content: center;
+              align-items: center;
+              z-index: 1000;
+            }
 
-        @media (max-width: 600px) {
-          form {
-            padding: 25px;
-          }
-        }
+            #loading-overlay span {
+              background: white;
+              padding: 20px 30px;
+              border-radius: 10px;
+              font-size: 18px;
+              font-weight: bold;
+              color: #333;
+              box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            }
 
-        @keyframes fadeIn {
-          from {opacity: 0; transform: translateY(-10px);}
-          to {opacity: 1; transform: translateY(0);}
-        }
+            @media (max-width: 600px) {
+              form {
+                padding: 25px;
+              }
+            }
 
-        @keyframes slideUp {
-          from {opacity: 0; transform: translateY(20px);}
-          to {opacity: 1; transform: translateY(0);}
-        }
-    </style>
+            @keyframes fadeIn {
+              from {opacity: 0; transform: translateY(-10px);}
+              to {opacity: 1; transform: translateY(0);}
+            }
 
-    <meta name="google-site-verification" content="HKR9siuIhIXfd0PjRAC5xoj4P4iJakituaIiEihsbl8"/>
-</head>
-<body>
+            @keyframes slideUp {
+              from {opacity: 0; transform: translateY(20px);}
+              to {opacity: 1; transform: translateY(0);}
+            }
+        </style>
 
-<div id="loading-overlay">
-    <span>Loading, please wait...</span>
-</div>
+        <meta name="google-site-verification" content="HKR9siuIhIXfd0PjRAC5xoj4P4iJakituaIiEihsbl8"/>
+    </head>
+    <body>
+        <!-- Google Tag Manager (noscript) -->
+        <noscript>
+            <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KG3C8MZ3"
+                    height="0" width="0" style="display:none;visibility:hidden"></iframe>
+        </noscript>
+        <!-- End Google Tag Manager (noscript) -->
 
-<form id="predict-form">
-    <h1>Email Phishing Detector</h1>
+        <div id="loading-overlay">
+            <span>Loading, please wait...</span>
+        </div>
 
-    <div class="info">Please fill the fields with (<span class="required-star">*</span>)</div>
+        <form id="predict-form">
+            <h1>Email Phishing Detector</h1>
 
-    <label>Sender (<span class="required-star">*</span>):</label>
-    <input type="text" name="sender" placeholder="sender@example.com" required>
+            <div class="info">Please fill the fields with (<span class="required-star">*</span>)</div>
 
-    <label>Receiver:</label>
-    <input type="text" name="receiver" placeholder="receiver@example.com">
+            <label>Sender (<span class="required-star">*</span>):</label>
+            <input type="text" name="sender" placeholder="sender@example.com" required>
 
-    <label>Date:</label>
-    <input type="text" name="date" placeholder="25 May, 2025">
+            <label>Receiver:</label>
+            <input type="text" name="receiver" placeholder="receiver@example.com">
 
-    <label>Subject (<span class="required-star">*</span>):</label>
-    <input type="text" name="subject" placeholder="e.g. No Subject" required>
+            <label>Date:</label>
+            <input type="text" name="date" placeholder="25 May, 2025">
 
-    <label>Body (<span class="required-star">*</span>):</label>
-    <textarea name="body" rows="5" required placeholder="Body of the Email"></textarea>
+            <label>Subject (<span class="required-star">*</span>):</label>
+            <input type="text" name="subject" placeholder="e.g. No Subject" required>
 
-    <label>URLs:</label>
-    <input type="text" name="urls" placeholder="https://phishingdetection.net">
+            <label>Body (<span class="required-star">*</span>):</label>
+            <textarea name="body" rows="5" required placeholder="Body of the Email"></textarea>
 
-    <label>Model (<span class="required-star">*</span>):</label>
-    <select name="model_choice" required>
-        <option value="naive_bayes">Naive Bayes</option>
-        <option value="logistic_regression">Logistic Regression</option>
-        <option value="svm">SVM</option>
-    </select>
+            <label>URLs:</label>
+            <input type="text" name="urls" placeholder="https://phishingdetection.net">
 
-    <br><br>
+            <label>Model (<span class="required-star">*</span>):</label>
+            <select name="model_choice" required>
+                <option value="naive_bayes">Naive Bayes</option>
+                <option value="logistic_regression">Logistic Regression</option>
+                <option value="svm">SVM</option>
+            </select>
 
-    <div class="warning-box">
-        ⚠️ <strong>Note:</strong> SVM performs the best, while Naive Bayes is the least accurate. Choose your model
-        wisely!
-    </div>
+            <br><br>
 
-    <button type="submit">Predict</button>
+            <div class="warning-box">
+                ⚠️ <strong>Note:</strong> SVM performs the best, while Naive Bayes is the least accurate. Choose your model
+                wisely!
+            </div>
 
-    <h2 id="result"></h2>
-</form>
-<script src="/static/index.js"></script>
+            <button type="submit">Predict</button>
 
-<!--
-  Favicon Attribution:
-  Phishing icons created by Freepik - Flaticon
-  https://www.flaticon.com/free-icons/phishing
--->
+            <h2 id="result"></h2>
+        </form>
+        <script src="/static/index.js"></script>
 
-</body>
+        <!--
+          Favicon Attribution:
+          Phishing icons created by Freepik - Flaticon
+          https://www.flaticon.com/free-icons/phishing
+        -->
+
+    </body>
 </html>
