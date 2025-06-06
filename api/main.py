@@ -1,11 +1,10 @@
-from api.pipeline import predict_email, predict_url
+from api.pipeline import predict_email
 
-from fastapi import FastAPI, Form
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from fastapi.requests import Request
-from starlette.responses import Response
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from pydantic import BaseModel
@@ -14,7 +13,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Make it ['*'] for local testing
+    allow_origins=["https://phishingdetection.net"],  # Make it ['*'] for local testing
     allow_credentials=True,
     allow_methods=["POST", "GET"],
     allow_headers=["*"],
