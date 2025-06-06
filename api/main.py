@@ -71,21 +71,4 @@ def predict(input: EmailInput):
         model_choice=input.model_choice
     )
 
-    # Get the URL verdict if provided
-    if input.urls.strip():
-        url_result = predict_url(input.urls)
-    else:
-        url_result = "Not Provided - Confidence: 0.00%"
-
-    # Parse both results
-    email_label = email_result.split(" - ")[0]
-    url_label = url_result.split(" - ")[0]
-
-    # Final verdict: phishing if either is phishing
-    final_verdict = "Phishing" if "Phishing" in [email_label, url_label] else "Legitimate"
-
-    return {
-        "final_verdict": final_verdict,
-        "email_detection": email_result,
-        "url_detection": url_result
-    }
+    return {'result': email_result}

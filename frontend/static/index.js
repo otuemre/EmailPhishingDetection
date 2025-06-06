@@ -21,11 +21,7 @@ form.addEventListener("submit", async (e) => {
     });
 
     const res = await response.json();
-    resultBox.innerHTML = `
-      <strong>Final Verdict:</strong> ${res.final_verdict}<br><br>
-      <strong>Email Detection:</strong> ${res.email_detection}<br>
-      <strong>URL Detection:</strong> ${res.url_detection}
-    `;
+    resultBox.innerText = res.result;
   } catch (err) {
     resultBox.textContent = "Error: Could not connect to the API";
   } finally {
